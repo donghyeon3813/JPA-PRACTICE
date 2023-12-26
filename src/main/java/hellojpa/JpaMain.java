@@ -19,23 +19,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            Member member = new Member(); insert
-//            member.setId(2L);
-//            member.setName("HelloB");
-//            em.persist(member);
-
-//            Member findMember = em.find(Member.class, 1L); // jpa를 통해 가져온 객체는 jpa에 의해 관리되며 commit이 있을 때 변경된 부분을 감지하여 update를 해준다.
-//            findMember.setName("HelloJPA");
-
-            //jpql 객체 지향 쿼리 언어 -> 엔티티 객체를 대상으로 쿼리
-            List<Member> result = em.createQuery("select m from Member as m ", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)//pagination
-                    .getResultList();
-
-            for (Member member: result) {
-                System.out.println("member.name() = " + member.getName());
-            }
+            //영속
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZZZ");
+            System.out.println("============================");
 
             tx.commit();
         } catch (Exception e) {
