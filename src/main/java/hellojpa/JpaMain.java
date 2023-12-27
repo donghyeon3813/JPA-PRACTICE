@@ -20,8 +20,9 @@ public class JpaMain {
 
         try {
             //영속
-            Member member = new Member(200L, "member200");
-            em.persist(member);
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAAA");
+            em.detach(member);// 준영속상태로 변경
 
             em.flush(); // 플러시 강제호출
 
