@@ -16,7 +16,7 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="10"/> <!-- 설정된 갯수만큼 데이터베이스에 한방에 커밋을 날린다.  -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <property name="hibernate.hbm2ddl.auto" value="create" /> <!-- DDL 자동생성 옵션 -->
         </properties>
     </persistence-unit>
 </persistence>

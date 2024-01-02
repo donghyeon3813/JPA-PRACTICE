@@ -1,22 +1,37 @@
 package hellojpa;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import java.util.Date;
 
 @Entity
 public class Member {
     @Id
-    private Long id;
-    private String name;
+    private Long     id;
+    @Column(name = "name")
+    private String   username;
+    private Integer  age;
+    @Enumerated(EnumType.STRING) //EnumType에 따라 숫자 또는 스트링으로 db에 입력
+    private RoleType roleType;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date     createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date     lastModifiedDate;
+    @Lob
+    private String description;
+
+    @Transient //DB에 관여하고싶지 않은 필드가 있을 때
+    private int temp;
 
     public Member() {
 
-    }
-
-    public Member(Long id, String name) {
-
-        this.id = id;
-        this.name = name;
     }
 
     public Long getId() {
@@ -29,13 +44,73 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
+    public String getUsername() {
 
-        return name;
+        return username;
     }
 
-    public void setName(String name) {
+    public void setUsername(String username) {
 
-        this.name = name;
+        this.username = username;
+    }
+
+    public Integer getAge() {
+
+        return age;
+    }
+
+    public void setAge(Integer age) {
+
+        this.age = age;
+    }
+
+    public RoleType getRoleType() {
+
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+
+        this.roleType = roleType;
+    }
+
+    public Date getCreatedDate() {
+
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getDescription() {
+
+        return description;
+    }
+
+    public void setDescription(String description) {
+
+        this.description = description;
+    }
+
+    public int getTemp() {
+
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+
+        this.temp = temp;
     }
 }
