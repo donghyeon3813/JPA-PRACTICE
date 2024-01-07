@@ -7,7 +7,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,8 +25,11 @@ public class Member {
     @Column(name = "USERNAME")
     private String   username;
 
-    @Column(name = "TEAM_ID")
-    private Long teamId;
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
 
@@ -46,13 +51,13 @@ public class Member {
         this.username = username;
     }
 
-    public Long getTeamId() {
+    public Team getTeam() {
 
-        return teamId;
+        return team;
     }
 
-    public void setTeamId(Long teamId) {
+    public void setTeam(Team team) {
 
-        this.teamId = teamId;
+        this.team = team;
     }
 }
