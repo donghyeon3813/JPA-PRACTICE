@@ -48,4 +48,14 @@ public class Team {
 
         this.members = members;
     }
+
+    @Override
+    public String toString() { // 양쪽에서 계속 호출하게된다.
+
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", members=" + members +
+                '}';
+    }
 }

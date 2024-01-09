@@ -22,23 +22,22 @@ public class JpaMain {
             //저장
             Team team = new Team();
             team.setName("TeamA");
+//            team.getMembers().add(member);
             em.persist(team);
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+            member.changeTeam(team);
             em.persist(member);
 
-            em.flush();
-            em.clear();
+//            em.flush();
+//            em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
-
-            for (Member m : members) {
+            Team team1 = em.find(Team.class, team.getId());
+            List<Member> members = team1.getMembers();
+            for (Member m : members){
                 System.out.println("m.getUsername() = " + m.getUsername());
             }
-
 
             tx.commit();
         } catch (Exception e) {
