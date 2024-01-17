@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,8 @@ public class Team {
     @Column(name = "TEAM_ID")
     private Long         id;
     private String       name;
-    @OneToMany(mappedBy = "team") // member의 Team의 변수명
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
     private List<Member> members = new ArrayList<>();
 
     public Long getId() {
@@ -47,15 +49,5 @@ public class Team {
     public void setMembers(List<Member> members) {
 
         this.members = members;
-    }
-
-    @Override
-    public String toString() { // 양쪽에서 계속 호출하게된다.
-
-        return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", members=" + members +
-                '}';
     }
 }

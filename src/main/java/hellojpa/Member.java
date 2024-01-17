@@ -56,11 +56,7 @@ public class Member {
         return team;
     }
 
-    public void changeTeam(Team team) {
 
-        this.team = team;
-        team.getMembers().add(this); // member를 설정해주는 동시에 양방향인 team에도 동시에 설정한다.
-    }
 
     @Override
     public String toString() {
