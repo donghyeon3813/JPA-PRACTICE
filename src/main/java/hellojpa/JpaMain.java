@@ -19,17 +19,17 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Movie movie = new Movie();
+            movie.setDirector("aaaa");
+            movie.setActor("bbb");
+            movie.setName("바람과함께사라지다.");
+            movie.setPrice(10000);
+            em.persist(movie);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
-
-            Team team = new Team();
-            team.setName("teamA");;
-            team.getMembers().add(member);
-
-            em.persist(team);
-
+            em.flush();
+            em.clear();
+            Movie findMNove = em.find(Movie.class, movie.getId());
+            System.out.println("findMNove = " + findMNove);
 
             tx.commit();
         } catch (Exception e) {
@@ -39,8 +39,6 @@ public class JpaMain {
         }
 
         emf.close(); // application이 종료되면서 닫아줘야 함
-
-
 
     }
 
