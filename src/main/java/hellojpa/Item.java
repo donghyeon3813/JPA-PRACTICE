@@ -8,8 +8,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)//조인 전략으로 설정
-@DiscriminatorColumn//entity 명으로 Type이 들어가게 된다.
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)//조인 전략으로 설정
+//entity 명으로 Type이 들어가게 된다.
 public class Item {
     @Id
     @GeneratedValue
