@@ -1,5 +1,7 @@
 package hellojpa;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -20,11 +22,30 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("user1");
-            member.setCreatedBy("Kim");
-            member.setCreatedDate(LocalDateTime.now());
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("hello");
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("hello2");
+            em.persist(member2);
+            em.flush();
+            em.clear();
+
+            Member m1 = em.find(Member.class, member1.getId());
+            Member m2 = em.getReference(Member.class, member2.getId());
+            System.out.println("(m1.getClass()== m2.getClass()) = " + (m1.getClass() == m2.getClass()));
+//            Member findMember = em.find(Member.class, member.getId());
+            Member reference = em.getReference(Member.class, member1.getId());
+            System.out.println("findMember = " + reference.getClass());
+            System.out.println("findMember.getUsername() = " + reference.getUsername());
+            System.out.println("findMember.getId() = " + reference.getId());
+
+            emf.getPersistenceUnitUtil().isLoaded(reference); // 프록시 인스턴스의 초기화 여부 확인
+
+            reference.getClass().getName(); // 프록시 클래스 확인 방법
+
+            Hibernate.initialize(reference); // 프록시 강제 초기화
 
             tx.commit();
         } catch (Exception e) {
@@ -35,6 +56,10 @@ public class JpaMain {
 
         emf.close(); // application이 종료되면서 닫아줘야 함
 
+    }
+
+    private static void printMemberAndTeam(Member member) {
+        String username = member.getUsername();
     }
 
 }
