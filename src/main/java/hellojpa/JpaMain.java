@@ -12,33 +12,24 @@ import java.util.List;
 public class JpaMain {
 
     public static void main(String[] args) {
-        //애플리케이션 로딩 시점에 데이터베이스당 딱 1개만
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");// persistance.xml에 정의된 unit name
-        // ex 고객의 요청이 올때마다 만들어줘야 하며 쓰레드간에 공유를 해서는 안된다.
         EntityManager em = emf.createEntityManager();
-        //데이터를 저장하는 행위가 일어날떄 반드시 해줘야함
-        //JPA의 모든 데이터 변경은 트랜잭션 안에서 실행
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
 
-            Member member1 = new Member();
-            member1.setUsername("hello");
-            member1.setTeam(team);
-            em.persist(member1);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.flush();
-            em.clear();
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-//            Member m = em.find(Member.class, member1.getId());
-            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
-            //SQL: select * from Member
-            //SQL: select * from Team
-            // 지연로딩을 설정한 후 페치조인을 하면 쿼리가 한번에 나온다.
+            em.persist(parent);
+            em.persist(child1);
+            em.persist(child2);
+
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
