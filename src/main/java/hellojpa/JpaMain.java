@@ -22,33 +22,26 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
             Member member1 = new Member();
             member1.setUsername("hello");
+            member1.setTeam(team);
             em.persist(member1);
 
-            Member member2 = new Member();
-            member2.setUsername("hello2");
-            em.persist(member2);
             em.flush();
             em.clear();
 
-            Member m1 = em.find(Member.class, member1.getId());
-            Member m2 = em.getReference(Member.class, member2.getId());
-            System.out.println("(m1.getClass()== m2.getClass()) = " + (m1.getClass() == m2.getClass()));
-//            Member findMember = em.find(Member.class, member.getId());
-            Member reference = em.getReference(Member.class, member1.getId());
-            System.out.println("findMember = " + reference.getClass());
-            System.out.println("findMember.getUsername() = " + reference.getUsername());
-            System.out.println("findMember.getId() = " + reference.getId());
-
-            emf.getPersistenceUnitUtil().isLoaded(reference); // 프록시 인스턴스의 초기화 여부 확인
-
-            reference.getClass().getName(); // 프록시 클래스 확인 방법
-
-            Hibernate.initialize(reference); // 프록시 강제 초기화
-
+//            Member m = em.find(Member.class, member1.getId());
+            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
+            //SQL: select * from Member
+            //SQL: select * from Team
+            // 지연로딩을 설정한 후 페치조인을 하면 쿼리가 한번에 나온다.
             tx.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             tx.rollback();
         } finally {
             em.close(); //자원을 다쓰면 닫아줘야함
