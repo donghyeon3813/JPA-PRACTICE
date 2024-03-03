@@ -1,6 +1,8 @@
 package hellojpa;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,12 +21,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Member extends BaseEntity {
+public class Member {
     @Id
     @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -32,12 +35,13 @@ public class Member extends BaseEntity {
     @Column(name = "USERNAME")
     private String   username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
 
+    //주소
+    @Embedded
+    private Address homeAddress;
 
     public Long getId() {
 
@@ -59,23 +63,23 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public Team getTeam() {
+    public Period getWorkPeriod() {
 
-        return team;
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
+    public void setWorkPeriod(Period workPeriod) {
 
-        this.team = team;
+        this.workPeriod = workPeriod;
     }
 
-    @Override
-    public String toString() {
+    public Address getHomeAddress() {
 
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", team=" + team +
-                '}';
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+
+        this.homeAddress = homeAddress;
     }
 }
