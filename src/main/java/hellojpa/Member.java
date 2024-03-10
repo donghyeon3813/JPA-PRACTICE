@@ -1,6 +1,8 @@
 package hellojpa;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -24,7 +26,9 @@ import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member {
@@ -42,6 +46,17 @@ public class Member {
     //주소
     @Embedded
     private Address homeAddress;
+
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD", joinColumns =
+        @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS", joinColumns =
+        @JoinColumn(name = "MEMBER_ID"))
+    private List<Address> addressesHistory = new ArrayList<>();
 
     public Long getId() {
 
@@ -81,5 +96,25 @@ public class Member {
     public void setHomeAddress(Address homeAddress) {
 
         this.homeAddress = homeAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<Address> getAddressesHistory() {
+
+        return addressesHistory;
+    }
+
+    public void setAddressesHistory(List<Address> addressesHistory) {
+
+        this.addressesHistory = addressesHistory;
     }
 }
