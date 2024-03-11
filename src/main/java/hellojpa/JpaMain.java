@@ -19,34 +19,13 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity","street","10000"));
+            List<Member> resultList = em.createQuery("select m from Member m where m.username like '%kim%'",
+                    Member.class
+            ).getResultList();
 
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
-
-            member.getAddressesHistory().add(new AddressEntity("old1","street","10000"));
-            member.getAddressesHistory().add(new AddressEntity("old1","street","10000"));
-
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-            System.out.println("================Start==========================");
-            Member findMember = em.find(Member.class, member.getId());
-
-            findMember.getAddressesHistory();
-
-            Address a = findMember.getHomeAddress();
-            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
-
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().remove("한식");
-
-//            findMember.getAddressesHistory().remove(new AddressEntity(new Address("old1","street","10000")));
-//            findMember.getAddressesHistory().add(new AddressEntity(new Address("newCity1","street","10000")));
+            for (Member member : resultList){
+                System.out.println("member = " + member);
+            }
 
             tx.commit();
         } catch (Exception e) {
