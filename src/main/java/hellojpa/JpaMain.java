@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,13 +23,7 @@ public class JpaMain {
 
         try {
 
-            List<Member> resultList = em.createQuery("select m from Member m where m.username like '%kim%'",
-                    Member.class
-            ).getResultList();
-
-            for (Member member : resultList){
-                System.out.println("member = " + member);
-            }
+            em.createNativeQuery("select MEMBER_ID, CITY, STREET, ZIPCODE, USERNAME FROM MEMBER").getResultList();
 
             tx.commit();
         } catch (Exception e) {
