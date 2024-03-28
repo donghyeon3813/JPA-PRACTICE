@@ -26,9 +26,21 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
+.idea/*
+.idea/vcs.xml
+### IntelliJ IDEA ###
+*/.idea
+*/*.iws
+*/*.iml
+*/*.ipr
+*/out/
+*/src/main/resources/application.yml
+!*/**/src/main/**/out/
+!*/**/src/test/**/out/
 # AWS User-specific
 .idea/**/aws.xml
+*/.gitignore
+
 
 # Generated files
 .idea/**/contentModel.xml
