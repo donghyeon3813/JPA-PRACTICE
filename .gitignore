@@ -27,7 +27,7 @@
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/*
-.idea/vcs.xml
+*/.idea/vcs.xml
 ### IntelliJ IDEA ###
 */.idea
 */*.iws
