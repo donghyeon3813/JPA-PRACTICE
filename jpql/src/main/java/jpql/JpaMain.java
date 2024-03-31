@@ -26,8 +26,10 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<MemberDto> resultList = em.createQuery("select new jpql.MemberDto(m.username, m.age) from Member m",
-                    MemberDto.class).getResultList();
+           em.createQuery("select m from Member m order by m.age desc", Member.class)
+                   .setFirstResult(0)
+                   .setMaxResults(10)
+                   .getResultList();
 
             tx.commit();
         } catch (Exception e) {
