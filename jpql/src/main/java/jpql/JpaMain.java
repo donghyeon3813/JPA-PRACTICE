@@ -26,6 +26,7 @@ public class JpaMain {
             member.setUsername("member1");
             member.setAge(10);
             member.setTeam(team);
+            member.setType(MemberType.ADMIN);
 
 
 
@@ -33,7 +34,8 @@ public class JpaMain {
 
             em.flush();
             em.clear();
-            String query = "select (select avg(m1.age) from Member m1),m from Member m inner join m.team t";
+            String query = "select m.username, 'HELLO', true from Member m " +
+                    "where m.type = jpql.MemberType.ADMIN";
            em.createQuery(query, Member.class)
                    .getResultList();
 
